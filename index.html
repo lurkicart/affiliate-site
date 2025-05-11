@@ -85,7 +85,7 @@
 
     .product:hover {
       transform: translateY(-5px);
-      
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
     }
 
     .product img {
@@ -128,6 +128,9 @@
 <div id="preloader">
   <div class="loader"></div>
 </div>
+
+<!--local storge (last memory stuff)-->
+<p id="lastVisitedNote" style="font-style: italic; margin-top: 10px; color: #333;"></p>
 
   <header>
     <h1>Each part contains the products featured in a video.</h1>
@@ -173,29 +176,29 @@
 
  <!-- part2 -->
   <div id="part2" class="product-section">
-    <div class="product"><img src="https://via.placeholder.com/220x180" alt="Product">
-        <h3>Product Title</h3>
-        <a href="#">View on Amazon</a>
+    <div class="product"><img src="https://m.media-amazon.com/images/I/51pEpwi+JfL._AC_SY606_.jpg" alt="Product">
+        <h3>AAA to AA Battery Adapter</h3>
+        <a href="https://amzn.to/4dgqCXO" class="view-on-amazon" target="_blank">View on Amazon</a>
     </div>
-    <div class="product"><img src="https://via.placeholder.com/220x180" alt="Product">
-      <h3>Product Title</h3>
-      <a href="#">View on Amazon</a>
+    <div class="product"><img src="https://m.media-amazon.com/images/I/71Oa+52XbjL._AC_SY300_SX300_.jpg" alt="Product">
+      <h3>Mattress Vacuum Cleaner</h3>
+      <a href="https://amzn.to/438zDxp" class="view-on-amazon" target="_blank">View on Amazon</a>
     </div>
-    <div class="product"><img src="https://via.placeholder.com/220x180" alt="Product">
-      <h3>Product Title</h3>
-      <a href="#">View on Amazon</a>
+    <div class="product"><img src="https://m.media-amazon.com/images/I/71ALEhg5EiL.__AC_SX300_SY300_QL70_FMwebp_.jpg" alt="Product">
+      <h3>WYBOT C1 Pool Robot Vacuum</h3>
+      <a href="https://amzn.to/3H4jXnp" class="view-on-amazon" target="_blank">View on Amazon</a>
     </div>
-    <div class="product"><img src="https://via.placeholder.com/220x180" alt="Product">
-      <h3>Product Title</h3>
-      <a href="#">View on Amazon</a>
+    <div class="product"><img src="https://m.media-amazon.com/images/I/51O-W7aOVFL.__AC_SX300_SY300_QL70_FMwebp_.jpg" alt="Product">
+      <h3>Inch Stainless Steel Shabu Hot Pot with Divider</h3>
+      <a href="https://amzn.to/4dhxUKW" clas="view-on-amazson" target="_blank">View on Amazon</a>
     </div>
-    <div class="product"><img src="https://via.placeholder.com/220x180" alt="Product">
-      <h3>Product Title</h3>
-      <a href="#">View on Amazon</a>
+    <div class="product"><img src="https://m.media-amazon.com/images/I/61PWiAMvy7L.__AC_SX300_SY300_QL70_FMwebp_.jpg" alt="Product">
+      <h3>2 in 1 Bracelet Helper Tool </h3>
+      <a href="https://amzn.to/453pEvQ" clas="view-on-amazson" target="_blank">View on Amazon</a>
     </div>
-    <div class="product"><img src="https://via.placeholder.com/220x180" alt="Product">
-      <h3>Product Title</h3>
-      <a href="#">View on Amazon</a>
+    <div class="product"><img src="https://m.media-amazon.com/images/I/61zvTyySIXL._AC_SX679_.jpg" alt="Product">
+      <h3>Umbrella with Fan and Mist Spray</h3>
+      <a href="https://amzn.to/3SxdQum" clas="view-on-amazson" target="_blank">View on Amazon</a>
     </div>
   </div>
 
@@ -220,6 +223,44 @@
        window.addEventListener("load", function () {
        document.getElementById("preloader").style.display = "none";
     });
+
+
+
+
+
+    // for the localstorage
+    const dropdown = document.getElementById("partDropdown");
+    const note = document.getElementById("lastVisitedNote");
+
+  // When dropdown changes, save selection
+  dropdown.addEventListener("change", function () {
+    localStorage.setItem("selectedPart", this.value);
+    note.textContent = "Last visited: " + this.options[this.selectedIndex].text;
+
+    // Optional: scroll to the selected section if it exists
+    const section = document.getElementById(this.value);
+    if (section) {
+      section.scrollIntoView({ behavior: "smooth" });
+    }
+  });
+
+  // On page load
+  window.addEventListener("DOMContentLoaded", function () {
+    const savedPart = localStorage.getItem("selectedPart");
+    if (savedPart) {
+      dropdown.value = savedPart;
+      const section = document.getElementById(savedPart);
+      if (section) {
+        section.scrollIntoView({ behavior: "smooth" });
+      }
+
+      // Show last visited note
+      const selectedOption = dropdown.querySelector(`option[value="${savedPart}"]`);
+      if (selectedOption) {
+        note.textContent = "Last visited: " + selectedOption.text;
+      }
+    }
+  });
   </script>
 </body>
 
